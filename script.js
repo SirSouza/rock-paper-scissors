@@ -3,7 +3,8 @@ let choiceOptions = ["rock", "paper", "scissors"];
 function getComputerChoice(computerChoice) {
 	return computerChoice[Math.floor(Math.random() * computerChoice.length)];
 }
-console.log("Computer choose:", getComputerChoice(choiceOptions));
+const computerSelection = getComputerChoice(choiceOptions);
+console.log("Computer choose:", computerSelection);
 
 function getHumanChoice() {
 	let humanChoice = prompt("What is your choice?");
@@ -12,9 +13,30 @@ function getHumanChoice() {
 	} else {
 		alert("Invalid options");
 	}
-	return humanChoice;
+	return humanChoice.toLowerCase();
 }
-getHumanChoice();
+const humanSelection = getHumanChoice();
 
-playerScore = 0;
-computerScore = 0;
+function playGame() {
+	let playerScore = 0;
+	let computerScore = 0;
+	function playRound(humanChoice, computerChoice) {
+		if (humanChoice === computerChoice) {
+			console.log("Draw");
+		} else if (
+			(humanChoice === "paper" && computerChoice === "rock") ||
+			(humanChoice === "rock" && computerChoice === "scissors") ||
+			(humanChoice === "scissors" && computerChoice === "paper")
+		) {
+			console.log("player won");
+			playerScore++;
+		} else {
+			console.log("Computer Won");
+			computerScore++;
+		}
+	}
+
+	playRound(humanSelection, computerSelection);
+	console.log(playerScore, computerScore);
+}
+console.log(playGame());
