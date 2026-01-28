@@ -3,8 +3,7 @@ let choiceOptions = ["rock", "paper", "scissors"];
 function getComputerChoice(computerChoice) {
 	return computerChoice[Math.floor(Math.random() * computerChoice.length)];
 }
-const computerSelection = getComputerChoice(choiceOptions);
-console.log("Computer choose:", computerSelection);
+
 
 function getHumanChoice() {
 	let humanChoice = prompt("What is your choice?");
@@ -15,28 +14,58 @@ function getHumanChoice() {
 	}
 	return humanChoice.toLowerCase();
 }
-const humanSelection = getHumanChoice();
+
+
+function playRound(humanChoice, computerChoice) {
+	if (humanChoice === computerChoice) {
+		console.log("Draw - no points awarde");
+		return "Draw";
+	} else if (
+		(humanChoice === "paper" && computerChoice === "rock") ||
+		(humanChoice === "rock" && computerChoice === "scissors") ||
+		(humanChoice === "scissors" && computerChoice === "paper")
+	) {
+		console.log(`Player won this round`);
+		return "player";
+	} else {
+		console.log(`Computer won this round`);
+		return "computer";
+	}
+}
 
 function playGame() {
 	let playerScore = 0;
 	let computerScore = 0;
-	function playRound(humanChoice, computerChoice) {
-		if (humanChoice === computerChoice) {
-			console.log("Draw");
-		} else if (
-			(humanChoice === "paper" && computerChoice === "rock") ||
-			(humanChoice === "rock" && computerChoice === "scissors") ||
-			(humanChoice === "scissors" && computerChoice === "paper")
-		) {
-			console.log("player won");
-			playerScore++;
-		} else {
-			console.log("Computer Won");
-			computerScore++;
-		}
-	}
+	let finalScore = 5;
 
-	playRound(humanSelection, computerSelection);
-	console.log(playerScore, computerScore);
+	do {
+		const humanSelection = getHumanChoice();
+		const computerSelection = getComputerChoice(choiceOptions);
+		console.log("Computer Selection:", computerSelection);
+
+		const winner = playRound(humanSelection, computerSelection);
+		if (winner === "player") {
+			playerScore++;
+			console.log(
+				`Computer points: ${computerScore}\nPlayer Points: ${playerScore}`,
+			);
+		} else if (winner === "computer") {
+			computerScore++;
+			console.log(
+				`Computer points: ${computerScore}\nPlayer Points: ${playerScore}`,
+			);
+		}
+	} while (playerScore < finalScore && computerScore < finalScore);
+	console.log("=========== GAME OVER ===========");
+
+	if ((playerScore = finalScore)) {
+		console.log(`player wins`);
+	} else if ((computerScore = finalScore)) {
+		console.log(`Computer wins`);
+	}
 }
-console.log(playGame());
+	
+playGame();
+
+
+
